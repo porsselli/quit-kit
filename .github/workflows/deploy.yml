@@ -8,23 +8,24 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+    steps:
+      # 1. Clona tu repo
+      - uses: actions/checkout@v3
+
+      # 2. Prepara Node.js
+      - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
 
-      - name: Install dependencies
-        run: npm ci
+      # 3. Instala dependencias
+      - run: npm ci
 
-      - name: Build production bundle
-        run: npm run build
+      # 4. Construye tu PWA
+      - run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      # 5. Publica dist/ en gh‑pages
+      - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
